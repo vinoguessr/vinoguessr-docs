@@ -11,7 +11,7 @@ The service was developed as BlindLog, with the domain `blindlog.me`, the Google
 Use VinoGuessr as the single service name and remove BlindLog from code and documentation.
 
 - Move the repositories to the organization `vinoguessr` and rename them to `vinoguessr-api` / `vinoguessr-app` / `vinoguessr-web`.
-- Use `vinoguessr.com` as the public domain (`api.vinoguessr.com` for the API, `support@vinoguessr.com` as the email sender). The passkey RP ID, Associated Domains, and the Keychain identifier (`com.vinoguessr.app.tokens`) follow it.
+- Use `vinoguessr.com` as the public domain (`api.vinoguessr.com` for the API, `support@vinoguessr.com` as the email sender). The passkey RP ID, Associated Domains, and the Keychain identifier (`com.vinoguessr.app.tokens`) follow it. ADR-0005 later sets the RP ID to `vinoguessr.com` itself rather than the API host.
 - A Google Cloud project ID cannot be changed, so build a new project `vinoguessr` from scratch and delete the old project `blindlog` after the migration.
 - Use `vinoguessr-api` / `vinoguessr-app` as the JWT issuer / audience.
 
