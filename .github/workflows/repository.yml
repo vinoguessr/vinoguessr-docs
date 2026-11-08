@@ -1,0 +1,25 @@
+name: Repository CI
+on:
+  pull_request:
+  push:
+    branches: [main, 'codex/**']
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: repository-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  policy:
+    uses: vinoguessr/.github/.github/workflows/reusable-repository.yml@01fd9c61bce2139beb8ea173339d45c02d49b69f
+    permissions:
+      contents: read
+  wiki-links:
+    name: Wiki links survive export
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - run: python3 -m unittest discover -s scripts -v
