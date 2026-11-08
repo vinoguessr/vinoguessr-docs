@@ -13,7 +13,7 @@ The API verifies passkeys with swift-webauthn, which accepts exactly one origin.
 - The RP ID is `vinoguessr.com`, and the only allowed origin is `https://vinoguessr.com`. Both the iOS, iPadOS, and macOS app (which reports `https://vinoguessr.com`) and vinoguessr-web (served at `https://vinoguessr.com`) use it.
 - The app's associated domain is `webcredentials:vinoguessr.com`.
 - `https://vinoguessr.com/.well-known/apple-app-site-association` is served by the API, which already generates it from `APPLE_APP_ID`. The load balancer routes only that path on `vinoguessr.com` to the API backend; other paths on `vinoguessr.com` are not served until vinoguessr-web is deployed, and then go to its backend.
-- The API's passkey playground (`public/`) is a local development tool. It keeps working on `localhost` with `RELYING_PARTY_ID=localhost`; on `api.vinoguessr.com` its origin does not match and it is not supported.
+- The API's passkey playground (`public/`) is a local development tool. It keeps working on `localhost` with `RELYING_PARTY_ID=localhost`. On `api.vinoguessr.com` it is still served but cannot complete a ceremony, because its origin is rejected; the API should stop serving it in production.
 
 ## Alternatives
 
@@ -23,7 +23,9 @@ The API verifies passkeys with swift-webauthn, which accepts exactly one origin.
 
 ## Consequences
 
-Passkeys created for `api.vinoguessr.com` stop working; there are no users, so no migration is provided. The infrastructure serves `vinoguessr.com` through the same load balancer (certificate, DNS, and a host rule), and production sets `RELYING_PARTY_ID=vinoguessr.com` and `RELYING_PARTY_ORIGIN=https://vinoguessr.com`. The app changes its RP ID and associated domain.
+Passkeys created for `api.vinoguessr.com` stop working; there are no users, so no migration is provided.
+
+With the RP ID on the registrable domain, a page on any subdomain of `vinoguessr.com` can start a ceremony for it. The API's exact match on the single origin `https://vinoguessr.com` is what rejects assertions relayed from other subdomains, so allowed origins must never be widened to subdomains or wildcards; add only specific origins, each by its own decision. The infrastructure serves `vinoguessr.com` through the same load balancer (certificate, DNS, and a host rule), and production sets `RELYING_PARTY_ID=vinoguessr.com` and `RELYING_PARTY_ORIGIN=https://vinoguessr.com`. The app changes its RP ID and associated domain.
 
 ## References
 
