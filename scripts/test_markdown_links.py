@@ -1,5 +1,6 @@
 """Relative links in the README and ADRs must point at files that exist in this repository."""
 import re
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -25,12 +26,11 @@ class MarkdownLinkTests(unittest.TestCase):
                 self.assertEqual(broken_links(page), [])
 
     def test_detects_a_missing_target(self):
-        page = ROOT / 'scripts' / '_fixture.md'
-        page.write_text('[gone](missing.md) [ok](test_markdown_links.py) [web](https://example.com)')
-        try:
+        with tempfile.TemporaryDirectory() as directory:
+            page = Path(directory) / 'page.md'
+            (Path(directory) / 'present.md').write_text('present')
+            page.write_text('[gone](missing.md) [ok](present.md) [web](https://example.com)')
             self.assertEqual(broken_links(page), ['missing.md'])
-        finally:
-            page.unlink()
 
 
 if __name__ == '__main__':
