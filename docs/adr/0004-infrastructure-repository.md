@@ -21,7 +21,7 @@ Building container images and rolling them out to Cloud Run stays in `vinoguessr
 
 ## Consequences
 
-The Terraform CI job and the Terraform Dependabot entry are removed from the api repository. Infrastructure changes go through PRs in the infrastructure repository, and adding environment variables or secrets that the API uses is tracked with an Issue spanning both repositories.
+Once this repository holds the Terraform, a follow-up PR removes `Terraform/`, `Deploy/cloud-run/`, the Terraform CI job, and the Terraform Dependabot entry from the api repository, tracked by an Issue. The api ruleset that requires the `terraform` check is updated first, so removing the job does not block merges. Infrastructure changes go through PRs in the infrastructure repository, and adding environment variables or secrets that the API uses is tracked with an Issue spanning both repositories.
 
 ## References
 
