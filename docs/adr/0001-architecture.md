@@ -16,7 +16,7 @@ Sign-in uses passkeys (WebAuthn) and email one-time codes, and the API issues JW
 
 Images use Cloudflare Images, and email uses Cloudflare Email Service. The API runs on Google Cloud Run and is published through Cloudflare proxied DNS and a Google external HTTPS Load Balancer. OpenTelemetry data goes to Google Cloud through a Collector sidecar on Cloud Run.
 
-Clients are split into SwiftUI (iOS, iPadOS, and macOS 27.0 or later) and a Swift / Hummingbird web. Both treat the API as the source of truth and never finalize scores or participation from client-side values.
+Clients are split into SwiftUI (iOS, iPadOS, and macOS 27.0 or later) and a Swift / Hummingbird web. Both treat the API as the source of truth and never finalize scores or participation from client-side values. ADR-0006 later narrows the SwiftUI app to iOS and iPadOS.
 
 ## Alternatives
 
