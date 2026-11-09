@@ -12,7 +12,7 @@ Each platform the app targets has to be designed for, built in CI, and checked o
 
 - The app targets iOS and iPadOS 27.0 or later only. The app target supports only `iphoneos` and `iphonesimulator`, with the iPhone and iPad device families, and VinoGuessrKit declares only `.iOS(.v27)`.
 - macOS and visionOS are deferred, not rejected. Re-adding one takes a new ADR, together with the platform-specific code, a CI build for that platform, and checks on it.
-- CI builds and tests the targeted platforms only. VinoGuessrKit no longer builds for the macOS host, so its tests run with `xcodebuild test` on an iOS Simulator instead of `swift test` ([vinoguessr-app#9](https://github.com/vinoguessr/vinoguessr-app/issues/9)).
+- CI builds and tests the targeted platforms only. VinoGuessrKit has never built for the macOS host ([vinoguessr-app#16](https://github.com/vinoguessr/vinoguessr-app/issues/16)), so its tests run with `xcodebuild test` on an iOS Simulator instead of `swift test` ([vinoguessr-app#9](https://github.com/vinoguessr/vinoguessr-app/issues/9)).
 - Offering the iPad app on Apple silicon Macs and Apple Vision Pro as "Designed for iPad" remains an App Store Connect availability option, not a build target. It is decided when the app is first distributed.
 
 ## Alternatives
@@ -24,7 +24,7 @@ Each platform the app targets has to be designed for, built in CI, and checked o
 
 The app's SwiftUI code may use iOS-only APIs without platform guards. Re-adding macOS or visionOS later means revisiting the iOS-only APIs that accumulated in the meantime.
 
-`swift test` on a Mac no longer works for VinoGuessrKit; the vinoguessr-app README lists the `xcodebuild` commands that replace it. The shared rules and the foundation sync in `.github` still describe the app as iOS, iPadOS, and macOS until [.github#7](https://github.com/vinoguessr/.github/issues/7) updates them.
+`swift test` on a Mac stays unavailable for VinoGuessrKit, as it already was; the vinoguessr-app README lists the `xcodebuild` commands that replace it. The shared rules and the foundation sync in `.github` still describe the app as iOS, iPadOS, and macOS until [.github#7](https://github.com/vinoguessr/.github/issues/7) updates them.
 
 ## References
 
