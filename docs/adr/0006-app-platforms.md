@@ -29,7 +29,9 @@ The app's SwiftUI code may use iOS-only APIs without platform guards. Re-adding 
 ## References
 
 - https://github.com/vinoguessr/vinoguessr-app/issues/16
+- Owner decisions: https://github.com/vinoguessr/vinoguessr-app/issues/16#issuecomment-6731826206 (macOS) and https://github.com/vinoguessr/vinoguessr-app/issues/16#issuecomment-6733222432 (visionOS)
 - https://github.com/vinoguessr/vinoguessr-app/issues/9
 - https://developer.apple.com/documentation/apple-silicon/running-your-ios-apps-in-macos
 - https://developer.apple.com/documentation/visionos/determining-whether-to-bring-your-app-to-visionos
 - ADR-0001: [The API and PostgreSQL are the source of truth for business data](0001-architecture.md)
+- ADR-0005: [Use vinoguessr.com as the passkey relying party ID](0005-passkey-relying-party-id.md)
