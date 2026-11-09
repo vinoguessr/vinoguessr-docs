@@ -13,7 +13,7 @@ The API verifies passkeys with swift-webauthn, which accepts exactly one origin.
 - The RP ID is `vinoguessr.com`, and the only allowed origin is `https://vinoguessr.com`. Both the iOS, iPadOS, and macOS app (which reports `https://vinoguessr.com`) and vinoguessr-web (served at `https://vinoguessr.com`) use it. ADR-0006 later narrows the app to iOS and iPadOS.
 - The app's associated domain is `webcredentials:vinoguessr.com`.
 - `https://vinoguessr.com/.well-known/apple-app-site-association` is served by the API, which already generates it from `APPLE_APP_ID`. The load balancer routes only that path on `vinoguessr.com` to the API backend; other paths on `vinoguessr.com` are not served until vinoguessr-web is deployed, and then go to its backend.
-- The API's passkey playground (`public/`) is a local development tool. It keeps working on `localhost` with `RELYING_PARTY_ID=localhost`. On `api.vinoguessr.com` it is still served but cannot complete a ceremony, because its origin is rejected; the API should stop serving it in production ([vinoguessr-api#409](https://github.com/vinoguessr/vinoguessr-api/issues/409)).
+- The API's passkey playground (`public/`) is a local development tool. It keeps working on `localhost` with `RELYING_PARTY_ID=localhost`. On `api.vinoguessr.com` it is still served but cannot complete a ceremony, because its origin is rejected; the API should stop serving it in production ([vinoguessr-api#409](https://github.com/vinoguessr/vinoguessr-api/issues/409)). [vinoguessr-api#411](https://github.com/vinoguessr/vinoguessr-api/pull/411) later moves it to `playground/` and serves it only with `--env develop`, so `api.vinoguessr.com` no longer serves it and the production image does not contain it.
 
 ## Alternatives
 
